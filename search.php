@@ -44,7 +44,7 @@ $page = isset($_GET["page"]) ? $_GET["page"] : 1;
 							<input type="hidden" name="type" value="<?php echo $type; ?>">
 							<input class="searchBox" type="text" name="term" value="<?php echo $term; ?>" autocomplete="off">
 							<button class="searchButton">
-								<img src="assets/images/icons/search.png">
+								<img src="assets/images/search.png">
 							</button>
 						</div>
 					</form>
