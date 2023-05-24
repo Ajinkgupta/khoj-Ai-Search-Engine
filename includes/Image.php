@@ -42,7 +42,7 @@ class ImageResultsProvider
 		$query->bindParam(":pageSize", $pageSize, PDO::PARAM_INT);
 		$query->execute();
 
-		$resultsHtml = "<div class='imageResults'>";
+		$resultsHtml = "<div class='grid'>";
 
 		$count = 0;
 		while($row = $query->fetch(PDO::FETCH_ASSOC)) 
@@ -61,17 +61,11 @@ class ImageResultsProvider
 			else
 				$displayText = $imageUrl;
 			
-			$resultsHtml .= "<div class='gridItem image$count'>
+			$resultsHtml .= "<div class='item'>
 								<a href='$imageUrl' data-fancybox data-caption='$displayText'
 									data-siteurl='$siteUrl'>
-									
-									<script>
-									$(document).ready(function() {
-										loadImage(\"$imageUrl\", \"image$count\");
-									});
-									</script>
-
-									<span class='details'>$displayText</span>
+									 <img src='$imageUrl' >
+									 <span class='details'>$displayText</span>
 								</a>
 
 							</div>";

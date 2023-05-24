@@ -26,13 +26,7 @@ class SiteResultsProvider
 
 	public function getResultsHtml($page, $pageSize, $term) 
 	{
-		/*
-			Pagination system logic ($fromLimit)
-			page1: (1 - 1) * 20 = 0
-			page2: (2 - 1) * 20 = 20
-			page3: (3 - 1) * 20 = 40
-			...
-		*/
+		 
 		$fromLimit = ($page - 1) * $pageSize;
 
 		$query = $this->con->prepare("SELECT * 

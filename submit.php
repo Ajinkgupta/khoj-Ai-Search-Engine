@@ -66,7 +66,7 @@ function insertImage($url, $src, $alt, $title)
 function createLink($src, $url)
 {
 	$scheme = parse_url($url)["scheme"]; // http
-	$host = parse_url($url)["host"]; // www.safesploit.com
+	$host = parse_url($url)["host"]; 
 	
 	if(substr($src, 0, 2) == "//") 
 		$src =  $scheme . ":" . $src;
@@ -206,25 +206,33 @@ function followLinks($url)
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
-	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
+	<link rel="stylesheet" type="text/css" href="assets/css/design.css">
 </head>
 <body>
-    
-     
-    <div class="wrapper indexPage">
-        <div class="mainSection">
-			<div class="logoContainer">
-				<img src="assets/images/khoj.png" title="Logo of our site" alt="Site logo">
-			</div>
 
-			<div class="searchContainer" id="crawl-wrapper">
-				<form action="submit.php" method="post" >
-			URL: <input type="text" name="url" required="required" id="crawl-input" value="">
-			<button type="submit">Crawl</button>
-		</form>
-			</div>
-		</div>
-    </div>
+<div class="home-page">
+	 
+	 <div class="mainSection">
+		 <div class="logo-home" >
+			 <img src="assets/images/khoj.png"  class="logo-home" title="Logo of our site" alt="Site logo">
+			  
+
+		 </div>
+	   <div class="heading" > <h1>  Let us index your website </h1> </div>
+	   
+	 <div class="searchContainer">
+	 <form action="submit.php" method="post" >
+
+			 <div class=" searchbar">
+			 <input class="searchBox" type="text" name="url" required="required" id="crawl-input" value=""> 
+			 <button class="searchButton" type="submit">🕷️</button>
+			 
+			 </div>
+		 </form>
+	 </div>
+
+	 </div> 
+ </div>
 </body>
 </html>
     

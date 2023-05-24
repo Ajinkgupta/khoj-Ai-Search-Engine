@@ -1,9 +1,9 @@
 <?php
 ob_start();
 
-$dbname = "";
+$dbname = "khoj";
 $dbhost = "localhost";
-$dbuser = "";
+$dbuser = "root";
 $dbpass = "";
 
 try 
