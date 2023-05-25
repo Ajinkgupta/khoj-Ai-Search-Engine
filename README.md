@@ -5,6 +5,7 @@ Khoj is a web-based search engine built using PHP, MySQL, and Ajax. It includes 
 ## Features
 - Web crawler that can index and retrieve information from websites
 - Search interface that allows users to search for specific keywords
+- Image /Video/Sites
 - Lightweight and easy to use
 - Uses PHP, MySQL, and Ajax
 ## Requirements
