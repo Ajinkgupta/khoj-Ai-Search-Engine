@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Website Crawler</title>
+</head>
+<body>
+    <h1>Website Crawler</h1>
+
+    <h2>Crawl a URL</h2>
+    <form action="crawler.php" method="post">
+        URL: <input type="text" name="url">
+        <input type="submit" value="Crawl">
+    </form>
+
+    <h2>Get Sitemap</h2>
+    <form action="crawler.php" method="post">
+        <input type="hidden" name="sitemap" value="true">
+        <input type="submit" value="Get Sitemap">
+    </form>
+</body>
+</html>
