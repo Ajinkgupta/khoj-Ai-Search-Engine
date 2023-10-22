@@ -1,9 +1,11 @@
-<?php
-error_reporting(0);
+<?php 
+
 include("lang/lang.php");
 include("config/config.php");
 include("provider/sites.php");
 include("provider/images.php");
+include("provider/github.php");
+
 
 if (isset($_GET['term']))
     $term = $_GET['term'];
@@ -19,11 +21,14 @@ if ($type == "sites") {
 } elseif ($type == "images") {
     $resultsProvider = new ImageResultsProvider($con);
     $pageSize = 30;
-} elseif ($type == "videos") {
-    include("provider/Video.php");
-    $resultsProvider = 10;
-    $pageSize = 30;
-    $numResults = 10;
+} elseif ($type == "github") {
+    $resultsProvider = new GitHubResultsProvider($term);
+    $pageSize = 20;
+} elseif($type == "videos") {
+    include("provider/video.php");
+// Create an instance of VideoResultsProvider with the API host and key
+   $resultsProvider = new VideoResultsProvider("https://youtube-search-results.p.rapidapi.com", "4d5fdb515amsh34d74db809e079ep1408b3jsnb23a68d88dc9");
+    $pageSize = 30; 
 }
 
 if ($page == 1) {
@@ -51,6 +56,10 @@ if ($page > 1) {
     <link rel="stylesheet" type="text/css" href="assets/css/grid.css">
     <link rel="stylesheet" type="text/css" href="assets/css/search.css">
     <link rel="stylesheet" type="text/css" href="assets/css/home.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/special.css">
+
+    
+    <link rel="search" type="application/opensearchdescription+xml" title="KHOJ" href="./opensearch.xml">
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <script>
         function loadMoreResults() {
@@ -113,14 +122,26 @@ if ($page > 1) {
                         <i class="fa fa-file-image-o"></i>
                     </div>
                 </a>
+                <a href='<?php echo "search.php?term=$term&type=github#result"; ?>' class=" ">
+                    <div class="button-icons <?php echo $type == 'github' ? 'active' : '' ?>">
+                        <i class="fa fa-github"></i>
+                    </div>
+                </a>
+                
                 <a href='<?php echo "news"; ?>' class="  ">
                     <div class="button-icons">
                         <i class="fa fa-newspaper-o"></i>
                     </div>
                 </a>
+
             </div>
             <div id="result">
                 <div class="mainResultsSection" id="search-results">
+                <?php
+        // Include the commands file to process special commands
+        include 'provider/special.php';
+        ?>
+
                     <p class="resultsCount" style="text-align:center;font-weight:900;font-size:20px;"><?php echo $numResults; ?> <?= $translations['result_count'] ?></p>
                     <?php echo $resultsHtml; ?>
                 </div>

@@ -26,6 +26,7 @@ class SiteResultsProvider
 
 	public function getResultsHtml($page, $pageSize, $term) 
 	{
+		
 		$fromLimit = ($page - 1) * $pageSize;
 
 		$query = $this->con->prepare("SELECT * 

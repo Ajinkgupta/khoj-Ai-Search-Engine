@@ -1,0 +1,35 @@
+.special-results {
+    background: #f4f4f4; /* Background color for the card */
+    padding: 20px; /* Padding inside the card */
+    border: 1px solid #ccc; /* Border */
+    border-radius: 10px; /* Rounded corners */
+    transition: 0.3s ease;
+    box-shadow:
+      -8px -8px 20px 0px #fff9,
+      -6px -6px 6px 0px #fff9,
+      8px 8px 20px 0px #0001,
+      5px 5px 6px 0px #0001,
+      inset 0px 0px 0px 0px #fff9,
+      inset 0px 0px 0px 0px #0001,
+      inset 0px 0px 0px 0px #fff9,
+      inset 0px 0px 0px 0px #0001;
+
+      margin-bottom:20px;
+ }
+
+
+
+
+h2 {
+    font-size: 20px; /* Heading font size */
+    color: #333; /* Heading text color */
+}
+
+p {
+    font-size: 16px; /* Paragraph font size */
+    color: #555; /* Paragraph text color */
+}
+
+audio {
+    margin-top: 10px; /* Spacing for audio player */
+}
