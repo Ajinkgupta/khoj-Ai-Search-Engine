@@ -1,0 +1,14 @@
+.reason {
+    color: white;
+    border-radius: 20px;
+    margin-top: 10px;
+    font-weight: 900;
+    padding: 5px;
+    background: #555;
+}
+
+body{
+background-color: #FCEED5 !important;}
+.clear-button {
+    background: orange;
+}

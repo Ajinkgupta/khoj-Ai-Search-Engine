@@ -1,125 +1,240 @@
-
 <?php
 error_reporting(0);
+include("lang/lang.php");
+include("config/config.php");
+include("provider/sites.php");
+include("provider/images.php");
 
-include("connect.php");
-include("includes/web.php");
-include("includes/Image.php"); 
-
-if(isset($_GET['term']))
+if (isset($_GET['term']))
     $term = $_GET['term'];
 else
     exit("You must enter a search term!");
 
 $type = isset($_GET["type"]) ? $_GET["type"] : "sites";
 $page = isset($_GET["page"]) ? $_GET["page"] : 1;
+
+if ($type == "sites") {
+    $resultsProvider = new SiteResultsProvider($con);
+    $pageSize = 20;
+} elseif ($type == "images") {
+    $resultsProvider = new ImageResultsProvider($con);
+    $pageSize = 30;
+} elseif ($type == "videos") {
+    include("provider/Video.php");
+    $resultsProvider = 10;
+    $pageSize = 30;
+    $numResults = 10;
+}
+
+if ($page == 1) {
+    $numResults = $resultsProvider->getNumResults($term);
+}
+
+$resultsHtml = $resultsProvider->getResultsHtml($page, $pageSize, $term);
+
+if ($page > 1) {
+    echo $resultsHtml;
+    exit();
+}
 ?>
 
 <!DOCTYPE html>
 <html>
 <head>
-    <title><?php if(isset($term) && $term != '') echo($term . ' | '); ?>Khoj Search</title>
-
-    <meta name="description" content="Search the web for sites and images.">
-    <meta name="keywords" content="Search engine, khoj, websites">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari&display=swap" rel="stylesheet">
+    <title><?= $translations['title'] ?></title>
+    <meta charset="UTF-8">
+    <meta name="description" content="<?= $translations['description'] ?>">
+    <meta name="keywords" content="<?= $translations['keywords'] ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="assets/css/design.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/grid.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/search.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/home.css">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <script>
+        function loadMoreResults() {
+            var page = <?php echo $page + 1; ?>;
+            var term = "<?php echo $term; ?>";
+            var type = "<?php echo $type; ?>";
+
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", `get.php?term=${term}&type=${type}&page=${page}`, true);
+
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    var newResults = xhr.responseText;
+                    var mainResultsSection = document.querySelector(".mainResultsSection");
+                    mainResultsSection.innerHTML += newResults;
+                }
+            };
+
+            xhr.send();
+        }
+    </script>
 </head>
+
 <body>
-
-<div class="home-page">
-
-    <div class="mainSection">
-        <div class="logo-home">
-            <img src="assets/images/khoj.png" class="logo-home" title="Logo of our site" alt="Site logo">
-        </div>
-        <div class="heading">
-            <h1>The Search Engine You Control</h1>
-        </div>
-
-        <div class="searchContainer">
-            <form action="search.php" method="GET">
-                <div class="searchbar">
-                    <input class="searchBox" type="text" name="term" value="<?php echo $term; ?>" autocomplete="off" placeholder="Search">
-                    <input class="searchButton" type="submit" value="&#128269;">
+    <div class="wrapper">
+        <div class="layout">
+            <div class="icon">
+                <a href="settings"><i class="fa fa-gear"></i> </a>
+            </div>
+            <div class="icon-2">
+                <form method="POST">
+                    <div>
+                        <select class="dropdown" name="language" onchange="this.form.submit()">
+                            <option value="en" <?= $selectedLanguage === 'en' ? 'selected' : '' ?>>English</option>
+                            <option value="hi" <?= $selectedLanguage === 'hi' ? 'selected' : '' ?>>हिंदी</option>
+                            <option value="mr" <?= $selectedLanguage === 'mr' ? 'selected' : '' ?>>मराठी</option>
+                            <option value="sa" <?= $selectedLanguage === 'sa' ? 'selected' : '' ?>>संस्कृत</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="khoj">
+                <center>
+                    <form class="search-form" action="search.php" method="GET">
+                        <input type="text" value="<?php echo $term; ?>" name="term" autocomplete="off" placeholder="<?= $translations['search_placeholder'] ?>" class="search-input">
+                        <button class="search-button" type="submit">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </form>
+                </center>
+            </div>
+            <div class="icon-button" style="display: flex; flex-direction: row; justify-content: center; align-items: center; width: 100%; gap: 50px; text-align: center; ">
+                <a href='<?php echo "search.php?term=$term&type=sites#result"; ?>' class="">
+                    <div class="button-icons <?php echo $type == 'sites' ? 'active' : '' ?>">
+                        <i class="fa fa-globe"></i>
+                    </div>
+                </a>
+                <a href='<?php echo "search.php?term=$term&type=images#result"; ?>' class=" ">
+                    <div class="button-icons <?php echo $type == 'images' ? 'active' : '' ?>">
+                        <i class="fa fa-file-image-o"></i>
+                    </div>
+                </a>
+                <a href='<?php echo "news"; ?>' class="  ">
+                    <div class="button-icons">
+                        <i class="fa fa-newspaper-o"></i>
+                    </div>
+                </a>
+            </div>
+            <div id="result">
+                <div class="mainResultsSection" id="search-results">
+                    <p class="resultsCount" style="text-align:center;font-weight:900;font-size:20px;"><?php echo $numResults; ?> <?= $translations['result_count'] ?></p>
+                    <?php echo $resultsHtml; ?>
                 </div>
-            </form>
+                <div class="paginationContainer" style="padding:50px;">
+                    <center> <button class="loadMoreButton" onclick="loadMoreResults()"> <?= $translations['load_more'] ?></button></center>
+                </div>
+            </div>
         </div>
-
     </div>
-</div>
+    <script>
+        function addFaviconAndDomain(resultContainer) {
+            const urlElement = resultContainer.querySelector('.url');
+            const url = urlElement.textContent;
+            const domain = new URL(url).hostname;
+            const faviconURL = `https://${domain}/favicon.ico`;
 
-<div id="result">
+            const faviconContainer = document.createElement('div');
+            faviconContainer.classList.add('favicon-container');
 
-    <div class="menu">
-        <a href='<?php echo "search.php?term=$term&type=sites#result"; ?>' class="menu-item <?php echo $type == 'sites' ? 'active' : '' ?>">Web</a>
-        <a href='<?php echo "search.php?term=$term&type=images#result"; ?>' class="menu-item <?php echo $type == 'images' ? 'active' : '' ?>">Image</a>
-        <a href='<?php echo "search.php?term=$term&type=videos#result"; ?>' class="menu-item <?php echo $type == 'videos' ? 'active' : '' ?>">Video</a>
-    </div>
+            const faviconImg = document.createElement('img');
+            faviconImg.alt = 'Favicon';
 
-    <hr class="hr-neon" />
+            faviconImg.src = faviconURL;
+            faviconImg.onerror = () => {
+                faviconImg.src = 'http://localhost/khoj/assets/images/khoj.png';
+            };
 
-    <div class="mainResultsSection">
-        <?php
-        if($type == "sites") 
-        {
-            $resultsProvider = new SiteResultsProvider($con);
-            $pageSize = 20;
-        }
-        else if ($type == "images") {
-            $resultsProvider = new ImageResultsProvider($con);
-            $pageSize = 30;
-        }
-        else if ($type == "videos") {
-            
-          include("includes/Video.php");
-		  $resultsProvider = 0; // Set the results provider to null
+            faviconImg.classList.add('favicon');
 
-		  $pageSize = 30;
-		  $numResults = 0;
+            const domainSpan = document.createElement('span');
+            domainSpan.textContent = domain;
+            domainSpan.classList.add('domain');
 
+            faviconContainer.appendChild(faviconImg);
+            faviconContainer.appendChild(domainSpan);
 
+            resultContainer.appendChild(faviconContainer);
         }
 
-        $numResults = $resultsProvider->getNumResults($term);
+        function addSaveButton(resultContainer) {
+            const saveButton = document.createElement('button');
+            saveButton.classList.add('saveButton');
+            saveButton.textContent = '<?= $translations['save'] ?>';
 
-        echo "<p class='resultsCount'>$numResults results found</p>";
-        echo $resultsProvider->getResultsHtml($page, $pageSize, $term);
-        ?>
-    </div>
+            saveButton.addEventListener('click', function() {
+                saveResult(resultContainer);
+            });
 
-    <div class="paginationContainer">
-        <?php
-        $pagesToShow = 10;
-        $numPages = ceil($numResults / $pageSize);
-        $pagesLeft = min($pagesToShow, $numPages);
+            resultContainer.appendChild(saveButton);
+        }
 
-        $currentPage = $page - floor($pagesToShow / 2);
+        function saveResult(resultContainer) {
+            const reason = prompt("Enter a reason for saving this result:");
 
-        if($currentPage < 1)
-            $currentPage = 1;
+            if (reason !== null) {
+                const resultSnippet = resultContainer.outerHTML;
+                const savedResults = JSON.parse(localStorage.getItem('savedResults')) || [];
 
-        if($currentPage + $pagesLeft > $numPages + 1)
-            $currentPage = $numPages + 1 - $pagesLeft;
+                if (!savedResults.some(result => result.includes(resultSnippet))) {
+                    savedResults.push({
+                        result: resultSnippet,
+                        reason
+                    });
 
-        while($pagesLeft != 0 && $currentPage <= $numPages) 
-        {
-            if($currentPage == $page) 
-            {
-                echo "<span class='pageNumber'>$currentPage</span>";
+                    localStorage.setItem('savedResults', JSON.stringify(savedResults));
+
+                    alert('Result saved successfully!');
+                } else {
+                    alert('Result is already saved!');
+                }
             }
-            else 
-            {
-                echo "<a href='search.php?term=$term&type=$type&page=$currentPage'><span class='pageNumber active'>$currentPage</span></a>";
-            }
-
-            $currentPage++;
-            $pagesLeft--;
         }
-        ?>
-    </div>
 
-</div>
+        const resultContainers = document.querySelectorAll('.resultContainer');
+        resultContainers.forEach(addFaviconAndDomain);
+        resultContainers.forEach(addSaveButton);
 
+        let currentPage = <?php echo $page; ?>;
+
+        function loadMoreResults() {
+            currentPage++;
+
+            const term = "<?php echo $term; ?>";
+            const type = "<?php echo $type; ?>";
+
+            const xhr = new XMLHttpRequest();
+            xhr.open("GET", `search.php?term=${term}&type=${type}&page=${currentPage}`, true);
+
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    const newResults = xhr.responseText;
+                    const mainResultsSection = document.querySelector(".mainResultsSection");
+                    const tempContainer = document.createElement('div');
+                    tempContainer.innerHTML = newResults;
+
+                    const newResultContainers = tempContainer.querySelectorAll('.resultContainer');
+                    newResultContainers.forEach(addFaviconAndDomain);
+                    newResultContainers.forEach(addSaveButton);
+
+                    mainResultsSection.appendChild(tempContainer);
+                }
+            };
+
+            xhr.send();
+        }
+
+        window.onscroll = function() {
+            var khoj = document.querySelector('.khoj');
+            if (window.scrollY > 20) {
+                khoj.classList.add('fixed');
+            } else {
+                khoj.classList.remove('fixed');
+            }
+        };
+    </script>
 </body>
 </html>

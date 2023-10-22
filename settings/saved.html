@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Saved Results</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            background-color: #0077cc;
+            color: #fff;
+            padding: 20px;
+            margin: 0;
+        }
+
+      
+        .resultContainer {
+            width: 100%;
+            background: white;
+            margin-bottom: 20px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .title {
+            font-size: 18px;
+            margin: 0;
+        }
+
+        .url {
+            color: #0077cc;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100%;
+            display: block;
+            margin-top: 10px;
+        }
+
+        .description {
+            color: #555;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Saved Results</h1>
+
+    <div id="savedResultsContainer">
+        <!-- Saved results will be displayed here -->
+    </div>
+
+    <script>
+        // Function to load and display the saved results
+        function loadSavedResults() {
+            // Get the saved results from local storage
+            const savedResults = JSON.parse(localStorage.getItem('savedResults')) || [];
+
+            // Get the container where saved results will be displayed
+            const savedResultsContainer = document.getElementById('savedResultsContainer');
+
+            if (savedResults.length === 0) {
+                savedResultsContainer.innerHTML = '<p>No saved results found.</p>';
+            } else {
+                // Loop through saved results and add them to the container
+                savedResults.forEach(function(result) {
+                    const resultContainer = document.createElement('div');
+                    resultContainer.classList.add('resultContainer');
+                    resultContainer.innerHTML = result;
+                    savedResultsContainer.appendChild(resultContainer);
+                });
+            }
+        }
+
+        // Call the function to load and display the saved results
+        loadSavedResults();
+    </script>
+</body>
+</html>

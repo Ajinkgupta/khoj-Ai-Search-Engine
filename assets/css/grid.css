@@ -1,0 +1,70 @@
+
+  /* Additional Styles for Grid Layout */
+  .grid {
+    columns: 18rem;
+    gap: 1rem;
+    counter-reset: grid;
+    margin-top: 100px;
+  }
+  
+
+
+  .item + .item {
+    margin-top: 1rem;
+  }
+  
+  .item {
+    break-inside: avoid;  
+    border-radius: 10%;
+  }
+
+
+ .item img { 
+    
+    margin: 20px 4%; 
+    background: #F2F3F7;
+    cursor: pointer;
+    transition: 0.3s ease;
+    box-shadow:
+      -8px -8px 20px 0px #fff9,
+      -6px -6px 6px 0px #fff9,
+      8px 8px 20px 0px #0001,
+      5px 5px 6px 0px #0001,
+      inset 0px 0px 0px 0px #fff9,
+      inset 0px 0px 0px 0px #0001,
+      inset 0px 0px 0px 0px #fff9,
+      inset 0px 0px 0px 0px #0001; 
+  }
+  
+  .item img:active {
+    box-shadow: 0px 0px 0px 0px #fff9,
+      0px 0px 0px 0px #fff9,
+      0px 0px 0px 0px #0001,
+      0px 0px 0px 0px #0001,
+      inset -8px -8px 20px 0px #fff9,
+      inset -5px -5px 6px 0px #fff9,
+      inset 8px 8px 20px 0px #0003,
+      inset 5px 5px 6px 0px #0001;
+  }
+  
+  .item img {
+    width: 100%; 
+    border-radius: 10%;
+  }
+  
+  .item::before {
+    counter-increment: grid;
+  }
+  
+
+  .item a .details {
+     
+    text-decoration: none;
+    display: none;
+  }
+  
+
+  .item .details {
+    text-decoration: none;
+    display:none;
+  }

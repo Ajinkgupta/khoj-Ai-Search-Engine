@@ -1,0 +1,120 @@
+
+body {
+    font-family: 'Noto Sans Devanagari', sans-serif; 
+}
+.active{  background-color: #f4c430;
+    color:black;}
+          
+          .khoj.fixed {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right:0;
+        z-index:999;
+    }
+
+    #result .siteResults {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+   #result .resultContainer {
+    
+    border: 2px solid #ebecf0;
+background: linear-gradient(160deg, #f0f1f4 0%, #e4e6eb 100%);
+box-shadow: -3px -3px 6px 2px #ffffff, 5px 5px 8px 0px rgba(0, 0, 0, 0.17),
+  1px 2px 2px 0px rgba(0, 0, 0, 0.1);
+  padding:5px!important;
+transition: 0.1s; border-radius: 20px; font-size:20px!important;
+        width: calc(50% - 50px); /* Two columns, with spacing */ 
+        margin: 10px;
+          
+        
+
+       
+    }
+
+
+    .resultcontainer:hover {
+box-shadow: 0px 0px 0px 0px #fff9,
+  0px 0px 0px 0px #fff9,
+  0px 0px 0px 0px #0001,
+  0px 0px 0px 0px #0001,
+  inset -8px -8px 20px 0px #fff9,
+  inset -5px -5px 6px 0px #fff9,
+  inset 8px 8px 20px 0px #0003,
+  inset 5px 5px 6px 0px #0001;
+}
+
+    .title {
+        font-size: 18px;
+    }
+
+ .url {
+color: #0077cc;
+white-space: nowrap;
+overflow: hidden;
+text-overflow: ellipsis;
+max-width: 100%;
+display: block;
+}
+
+
+    .description {
+     display: block;
+        color: #555;
+        padding:5px 0 50px 0;
+    }
+
+    @media (max-width: 468px) {
+        .resultContainer {
+            width: 100%;
+        }
+    }
+    
+     .resultContainer {
+        /* Your existing styles */
+        position: relative;
+        margin-bottom:30px;
+        
+    }
+        .favicon-container {
+        position: absolute;
+       bottom: 10;
+        left:10;
+        display: flex;
+        align-items: center;
+        background: white;
+        padding: 5px;
+        border: 1px solid #ccc;
+        border-radius: 30px;
+        box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.1);
+        color:black;
+    }
+ 
+      .saveButton { 
+        float:right;
+        background: white;
+        padding: 5px;
+        border: 1px solid #ccc;
+        border-radius: 30px;
+        box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.1);
+        color:black;}
+
+.loadMoreButton {  
+        
+        background: white;
+        padding: 5px;
+        border: 1px solid #ccc;
+        border-radius: 30px;
+        box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.1);
+        color:black;}
+
+    .favicon {
+        width: 32px;
+        height: 32px;
+        border-radius:50px;
+        border:1 px solid orange;
+
+    }
