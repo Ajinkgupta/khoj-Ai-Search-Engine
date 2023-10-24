@@ -20,7 +20,7 @@ if (isset($_POST['language'])) {
 }
 
 // Include all language files
-$availableLanguages = ['en', 'mr', 'hi', 'sa']; // Add more languages as needed
+$availableLanguages = ['en', 'mr', 'hi', 'sa' ,'kd']; // Add more languages as needed
 foreach ($availableLanguages as $language) {
     if ($selectedLanguage === $language) {
         include("$language.php");
