@@ -1,26 +1,25 @@
 <?php
-$translations = [
-    'title' => 'Khoj - The Search Engine You Control',
-    'heading' => 'The Search Engine You Control',
-    'search_placeholder' => 'Search',
-    'logo_title' => 'Logo of our site',
-    'logo_alt' => 'Site logo',
-    'description' => 'Search the web for sites and images.',
-    'keywords' => 'search engine, Khoj, websites',
-    'button_text'=> 'Crawl',
-    'latest_news'=> 'Latest News',
-    'result_count' => 'Results Found',
-    'load_more' => 'Load More',
-    'save' => 'Save',
-    'saved' => 'Saved',
-    'settings' => 'Khoj  Setting',
-    'settings_text' => 'Click the button below to clear all local storage and sessions',
-    'end' => 'End Session',
-    'choose_lang' => 'Select Language',
-    'delete_all' => 'Delete All',
-    'not_saved_found'=> 'No saved results found',
-    'news_title' => 'Khoj - The Search Engine You Control',
-    'no_news' => 'NO news items found',
-
+$अनुवादाः = [ .
+     'title' => 'खोज', 
+     'heading' => 'लेशं विना अन्वेषणम्',
+     'search_placeholder' => 'सुरक्षिततया अन्वेषणं कुर्वन्तु ...',
+     'logo_title' => 'साइट् लोगो',
+     'logo_alt' => 'साइट् लोगो', .
+     'description' => 'KHOJ इत्यनेन अनुसृत्य विना जालपुटं अन्वेष्टुम्।',
+     'keywords' => 'अन्वेषणयन्त्रम्, KHOJ, वेबसाइट्',
+     'button_text' => 'अन्वेषण', .
+     'latest_news' => 'नवीनतम समाचार',
+     'result_count' => 'परिणामाः प्राप्ताः',
+     'load_more' => 'अधिकं भारयतु',
+     'save' => 'रक्षतु', .
+     'saved' => 'रक्षित', .
+     'settings' => 'अन्वेषणसेटिंग्स्', .
+     'settings_text' => 'सर्वं स्थानीयं भण्डारणं सत्रं च स्वच्छं कर्तुं अधोलिखितं बटनं नुदन्तु',
+     'end' => 'सत्रसमाप्ति', .
+     'choose_lang' => 'भाषा चिनोतु',
+     'delete_all' => 'सर्वं विलोपयतु',
+     'not_saved_found' => 'न रक्षितं परिणामं न प्राप्तम्',
+     'news_title' => 'समाचार - KHOJ',
+     'no_news' => 'वार्ता न प्राप्ता',
 ];
 ?>
