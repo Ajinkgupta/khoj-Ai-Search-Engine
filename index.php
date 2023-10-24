@@ -32,6 +32,8 @@
                             <option value="hi" <?= $selectedLanguage === 'hi' ? 'selected' : '' ?>>हिंदी</option>
                             <option value="mr" <?= $selectedLanguage === 'mr' ? 'selected' : '' ?>>मराठी</option>
                             <option value="sa" <?= $selectedLanguage === 'sa' ? 'selected' : '' ?>>संस्कृत</option>
+                            <option value="sa" <?= $selectedLanguage === 'kd' ? 'selected' : '' ?>>ಕನ್ನಡ</option>
+
                         </select>
                     </div>
                 </form>
