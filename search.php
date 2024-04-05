@@ -97,8 +97,6 @@ if ($page > 1) {
                             <option value="hi" <?= $selectedLanguage === 'hi' ? 'selected' : '' ?>>हिंदी</option>
                             <option value="mr" <?= $selectedLanguage === 'mr' ? 'selected' : '' ?>>मराठी</option>
                             <option value="sa" <?= $selectedLanguage === 'sa' ? 'selected' : '' ?>>संस्कृत</option>
-                            <option value="kd" <?= $selectedLanguage === 'kd' ? 'selected' : '' ?>>ಕನ್ನಡ</option>
-
                         </select>
                     </div>
                 </form>
@@ -138,6 +136,107 @@ if ($page > 1) {
 
             </div>
             <div id="result">
+              
+              <div>
+                <div class='resultcontain'>
+			 
+				<span class='url'> <img src="https://cdn.create.vista.com/api/media/small/296354738/stock-vector-cute-white-modern-levitating-robot-waving-hand-and-with-happy-face-flat-vector-illustration-isolated" width="30px">KHOJ AI  &nbsp;  </span>
+				<span class='description'>
+                 <?php
+
+// Check if query parameter is set
+if(isset($_GET['term'])) {
+    // Get the query from the URL
+    $query = urlencode($_GET['term']); // Encode query parameter
+    
+    // Call the API with the query
+    $api_url = "https://8000-vickygpt-khojaisearchen-qnocvmusi3p.ws-us110.gitpod.io/api/?q=$query";
+    
+    // Fetch JSON response from the API
+    $json_response = file_get_contents($api_url);
+    
+    if ($json_response === false) {
+        // Output error message if unable to fetch API response
+        echo "Error: Unable to fetch API response.";
+    } else {
+        // Decode JSON response
+        $data = json_decode($json_response, true);
+        
+        // Check if the JSON decoding was successful and model_response exists
+        if ($data !== null && isset($data['model_response'])) {
+            // Output HTML response
+            echo $data['model_response'];
+        } else {
+            // Output error message if model_response is missing
+            echo "Error: Model response not found in API.";
+        }
+    }
+} else {
+    // Output error message if query parameter is missing
+    echo "Error: Query parameter missing in URL.";
+}
+
+?>
+                </span>
+ 			</div>
+            
+    <style>
+             .resultcontain  {
+border: 2px solid #ebecf0;
+background: linear-gradient(160deg, #f0f1f4 0%, #e4e6eb 100%);
+box-shadow: -3px -3px 6px 2px #ffffff, 5px 5px 8px 0px rgba(0, 0, 0, 0.17),
+  1px 2px 2px 0px rgba(0, 0, 0, 0.1);
+  padding:5px!important;
+transition: 0.1s; border-radius: 20px; font-size:20px!important;
+        width: 92%;
+        margin: 4%;
+       
+          
+}
+
+    
+
+ .resultcontain .url {
+ position: absolute;
+       bottom: 10;
+        left:10;
+        display: flex;
+        align-items: center;
+        background: white;
+        padding: 5px;
+        border: 1px solid #ccc;
+        border-radius: 30px;
+        box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.1);
+        color:black;
+}
+
+
+    .resultcontain .description {
+     display: block;
+        color: #555;
+        padding:50px 0px 50px 10px;
+     }
+     
+     .resultcontain .description ul {
+  list-style-type: disc; /* Change bullet point style */
+  margin-left: 20px; /* Adjust left margin */
+  padding-left: 0; /* Remove default padding */
+    font-size: 16px; /* Adjust font size */
+
+}
+
+.resultcontain .description ul li {
+  margin-bottom: 8px; /* Adjust spacing between list items */
+}
+
+
+     
+   
+    
+    </style>
+              </div>
+              
+              
                 <div class="mainResultsSection" id="search-results">
                 <?php
         // Include the commands file to process special commands
@@ -259,5 +358,110 @@ if ($page > 1) {
             }
         };
     </script>
+  
+  
+   <!-- Modal -->
+    <div id="myModal" class="modal">
+        <span class="close">&times;</span>
+        <img class="modal-content" id="modalImage">
+    </div>
+
+    <script>
+        // JavaScript code for new feature
+        function openModalWithImage(imageURL) {
+            var modal = document.getElementById("myModal");
+            var modalImg = document.getElementById("modalImage");
+            modal.style.display = "block";
+            modalImg.src = imageURL;
+
+            var span = document.getElementsByClassName("close")[0];
+            span.onclick = function() {
+                modal.style.display = "none";
+            }
+        }
+
+        function addIncoButtons() {
+            var resultContainers = document.querySelectorAll('.resultContainer');
+            resultContainers.forEach(function(container) {
+                var incoButton = document.createElement('button');
+                incoButton.textContent = 'Inco';
+                incoButton.classList.add('inco-button');
+
+                incoButton.onclick = function() {
+                    var url = container.querySelector('.url').textContent;
+                    var imageURL = `https://api.apiflash.com/v1/urltoimage?access_key=15ab100e065441d990be79554fcef441&url=${encodeURIComponent(url)}&format=webp&fresh=true&full_page=true&scroll_page=true&response_type=image`;
+                    openModalWithImage(imageURL);
+                };
+
+                container.appendChild(incoButton);
+            });
+        }
+
+        // Call the function to add inco buttons
+        addIncoButtons();
+    </script>
+  
+  <style>
+    
+    
+
+/* Modal */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 9999; /* Sit on top */
+    left: 5%;
+    top:5% ;
+    width: 90%;
+    height: 90%;
+  border-radius:10px;
+  border:1px solid black;
+    overflow: auto; /* Enable scrolling if the content exceeds the viewport */
+    background-color:white; /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+  max-width:100%;
+ }
+
+
+/* Close Button */
+.close {
+    color: black;
+    position: absolute;
+    top: 10px;
+  border:1px solid blue;
+  padding:3px 15px;
+  border-radius:10px;
+  
+    right: 25px;
+    font-size: 35px;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.close:hover,
+.close:focus {
+    color: #bbb;
+    text-decoration: none;
+    cursor: pointer;
+}
+    
+    
+.inco-button {
+    background-color: white;
+float:right; 
+  margin-right:10px;
+  padding:5px; 
+  border-radius:10px;
+  border:0px;
+  
+}
+
+ 
+
+
+  </style>
 </body>
 </html>
